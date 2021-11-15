@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  variables:
+    ENV_NAME: dev
+
+phases:
+  build:
+    commands:
+      - echo deploy started on `date`
+      - echo entered the deploy phase..
+      - echo Deploying to $ENV_NAME ENVINOMENT..
+
+artifacts:
+  files:
+    - target/rest-example-ws-0.0.1-SNAPSHOT.jar
+    - scripts/*.sh
+    - appspec.yml
+  discard-paths: yes

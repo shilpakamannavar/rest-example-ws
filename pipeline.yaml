@@ -3,7 +3,7 @@ Parameters:
   GitHubOwner:
     Type: String
     AllowedPattern: '[A-Za-z0-9-]+'
-    Default: quick-refs
+    Default: shilpakamannavar
   GitHubRepository:
     Type: String
     AllowedPattern: '[A-Za-z0-9-]+'

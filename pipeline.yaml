@@ -1,4 +1,19 @@
 AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  GitHubOwner:
+    Type: String
+    AllowedPattern: '[A-Za-z0-9-]+'
+    Default: quick-refs
+  GitHubRepository:
+    Type: String
+    AllowedPattern: '[A-Za-z0-9-]+'
+  GitHubBranch:
+    Type: String
+    AllowedPattern: '[A-Za-z0-9-]+'
+    Default: main
+  CodeBuildEnvironmentImage:
+    Type: String
+    Default: 'aws/codebuild/standard:4.0'
 Resources:
   CodeBuildServiceRole:
     Type: 'AWS::IAM::Role'
@@ -59,7 +74,7 @@ Resources:
         - Arn
       Source:
         Type: GITHUB
-        Location: !Sub 'https://github.com/shilpakamannavar/rest-example-ws.git'
+        Location: !Sub 'https://github.com/${GitHubOwner}/${GitHubRepository}.git'
         BuildSpec: buildspec.yaml
         Auth:
           Type: OAUTH
@@ -72,7 +87,7 @@ Resources:
           - - Type: EVENT
               Pattern: PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED,PULL_REQUEST_REOPENED
             - Type: BASE_REF
-              Pattern: !Sub '^refs/heads/master$'
+              Pattern: !Sub '^refs/heads/${GitHubBranch}$'
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
